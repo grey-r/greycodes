@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         environment: [prod]
-    uses: ./.github/workflows/deploy.yaml
+    uses: ./.github/workflows/subtask-deploy.yaml
     with:
       environment: ${{matrix.environment}}
     secrets: inherit
