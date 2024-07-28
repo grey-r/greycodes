@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22.x
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
         working-directory: ./artifacts/b2-worker
       - name: Install Wrangler
         run: npm install -g wrangler
