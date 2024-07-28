@@ -1,3 +1,4 @@
+name: Build (Sub-Task)
 on:
   workflow_call:
     inputs:
@@ -19,7 +20,7 @@ jobs:
       #   working-directory: workers/b2-proxy
       - name: Zip Worker
         id: zip-b2-proxy
-        if: github.event.inputs.package == true
+        if: github.event.inputs.package
         run: |
           workingDirectory=$(pwd)
           cd ./workers/b2-proxy
@@ -36,7 +37,7 @@ jobs:
           echo $outputFile >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       - name: Upload Worker
-        if: github.event.inputs.package == true
+        if: github.event.inputs.package
         uses: actions/upload-artifact@v4
         with:
           name: B2-Worker
