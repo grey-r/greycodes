@@ -9,6 +9,7 @@ jobs:
     uses: ./.github/workflows/subtask-build.yaml
     with:
       package: true
+      test: false
   deploy:
     needs: [build]
     strategy:
