@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: 22.x
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
         working-directory: pages/greycodes.net
       - uses: browser-actions/setup-chrome@v1
         if: ${{inputs.test}}
