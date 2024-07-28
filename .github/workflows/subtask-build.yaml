@@ -115,4 +115,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Pages-Coverage
-          path: ${{steps.zip-pages.outputs.artifact}}
+          path: ${{steps.zip-coverage.outputs.artifact}}
