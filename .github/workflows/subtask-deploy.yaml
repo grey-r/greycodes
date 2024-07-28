@@ -8,10 +8,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: "B2-Worker"
+          path: ./artifacts/b2-worker
+      - name: Unzip Worker
+        working-directory: ./artifacts/b2-worker
+        run: |
+          unzip ./artifact.zip
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
+          workingDirectory: ./artifacts/b2-worker
           apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           command: deploy

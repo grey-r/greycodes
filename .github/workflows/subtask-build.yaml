@@ -5,10 +5,39 @@ on:
         required: true
         type: boolean
 jobs:
-  build:
+  build-proxy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@4
-      - name: Noop Debug
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20.x
+      # - name: Install Dependencies
+      #   run: npm ci
+      #   working-directory: workers/b2-proxy
+      - name: Zip Worker
+        id: zip-b2-proxy
+        if: github.event.inputs.package == true
         run: |
-          echo 'Hey, nothing to build...'
+          workingDirectory=$(pwd)
+          cd ./workers/b2-proxy
+
+          zipFile=artifact.zip
+          zip -r $zipFile .
+
+          outputDirectory=$workingDirectory/artifacts
+          outputFile=$outputDirectory/$zipFile
+          mkdir -p $workingDirectory
+          cp ./$zipFile $outputFile
+
+          echo 'artifact<<EOF' >> $GITHUB_OUTPUT
+          echo $outputFile >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      - name: Upload Worker
+        if: github.event.inputs.package == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: B2-Worker
+          path: ${{steps.zip-b2-proxy.outputs.artifact}}
