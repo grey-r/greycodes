@@ -5,6 +5,9 @@ on:
       package:
         required: true
         type: boolean
+      test:
+        required: true
+        type: boolean
 jobs:
   build-proxy:
     runs-on: ubuntu-latest
@@ -14,7 +17,7 @@ jobs:
       # - name: Setup Node.js
       #   uses: actions/setup-node@v4
       #   with:
-      #     node-version: 20.x
+      #     node-version: 22.x
       # - name: Install Dependencies
       #   run: npm ci
       #   working-directory: workers/b2-proxy
@@ -42,3 +45,74 @@ jobs:
         with:
           name: B2-Worker
           path: ${{steps.zip-b2-proxy.outputs.artifact}}
+  build-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: "npm"
+          cache-dependency-path: pages/greycodes.net/package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: pages/greycodes.net
+      - name: Build Angular Pages
+        run: npm run build
+        working-directory: pages/greycodes.net
+      - uses: browser-actions/setup-chrome@v1
+        if: ${{inputs.test}}
+      - name: Test Angular Pages
+        if: ${{inputs.test}}
+        run: npm run test:ci
+        working-directory: pages/greycodes.net
+      - name: Zip Pages (Distributables)
+        id: zip-pages
+        if: ${{inputs.package}}
+        run: |
+          workingDirectory=$(pwd)
+          cd ./pages/greycodes.net/dist/greycodes.net/browser
+
+          zipFile=artifact.zip
+          zip -r $zipFile .
+
+          outputDirectory=$workingDirectory/artifacts
+          outputFile=$outputDirectory/$zipFile
+          mkdir -p $outputDirectory
+          cp ./$zipFile $outputFile
+
+          echo 'artifact<<EOF' >> $GITHUB_OUTPUT
+          echo $outputFile >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      - name: Upload Pages (Distributables)
+        if: ${{inputs.package}}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pages-Dist
+          path: ${{steps.zip-pages.outputs.artifact}}
+      - name: Zip Pages (Coverage)
+        id: zip-coverage
+        if: ${{inputs.test}}
+        run: |
+          workingDirectory=$(pwd)
+          cd ./pages/greycodes.net/coverage
+
+          zipFile=coverage.zip
+          zip -r $zipFile .
+
+          outputDirectory=$workingDirectory/artifacts
+          outputFile=$outputDirectory/$zipFile
+          mkdir -p $outputDirectory
+          cp ./$zipFile $outputFile
+
+          echo 'artifact<<EOF' >> $GITHUB_OUTPUT
+          echo $outputFile >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      - name: Upload Pages (Coverage)
+        if: ${{inputs.test}}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pages-Coverage
+          path: ${{steps.zip-coverage.outputs.artifact}}
