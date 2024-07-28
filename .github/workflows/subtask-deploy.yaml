@@ -53,7 +53,7 @@ jobs:
         with:
           name: "Pages-Dist"
           path: ./artifacts/pages
-      - name: Unzip Worker
+      - name: Unzip Pages
         working-directory: ./artifacts/pages
         run: |
           unzip ./artifact.zip
@@ -64,4 +64,4 @@ jobs:
           workingDirectory:
           apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: deploy ./artifacts/pages --project-name greycodes-${{inputs.environment}}
+          command: pages deploy ./artifacts/pages --project-name greycodes-${{inputs.environment}}
