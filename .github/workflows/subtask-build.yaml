@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: 22.x
           cache: "npm"
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: pages/greycodes.net/package-lock.json
       - name: Install Dependencies
         run: npm ci
         working-directory: pages/greycodes.net
