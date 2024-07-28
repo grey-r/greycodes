@@ -8,4 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@4
+      - uses: actions/checkout@v4
+      - name: Build & Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: deploy
+          secrets: |
+            B2_KEY_ID
+            B2_KEY_NAME
+            B2_KEY_VALUE
+        env:
+          B2_KEY_ID: ${{ secrets.B2_KEY_ID }}
+          B2_KEY_NAME: ${{ secrets.B2_KEY_NAME }}
+          B2_KEY_VALUE: ${{ secrets.B2_KEY_VALUE }}
+          B2_BUCKET_NAME: ${{ env.B2_BUCKET_NAME }}
+          B2_ENDPOINT: ${{ env.B2_ENDPOINT }}
