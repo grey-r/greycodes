@@ -9,15 +9,15 @@ main = "index.js"
 # You should set it as a secret in the Cloudflare dashboard or at the command line:
 # echo "<your b2 application key>" | wrangler secret put B2_APPLICATION_KEY
 [vars]
-# B2_APPLICATION_KEY_ID = #{B2_APPLICATION_KEY_ID}
-B2_ENDPOINT = #{B2_ENDPOINT}
+# B2_APPLICATION_KEY_ID = #{B2_APPLICATION_KEY_ID}#
+B2_ENDPOINT = #{B2_ENDPOINT}#
 # Set BUCKET_NAME to:
 #   "A Backblaze B2 bucket name" - direct all requests to the specified bucket
 #   "$path" - use the initial segment in the incoming URL path as the bucket name
 #           e.g. https://images.example.com/bucket-name/path/to/object.png
 #   "$host" - use the initial subdomain in the hostname as the bucket name
 #           e.g. https://bucket-name.images.example.com/path/to/object.png
-BUCKET_NAME = "#{B2_BUCKET_NAME}"
+BUCKET_NAME = #{B2_BUCKET_NAME}#
 # Backblaze B2 buckets with public-read visibility do not allow anonymous clients
 # to list the bucket’s objects. You can allow or deny this functionality in the
 # Worker via ALLOW_LIST_BUCKET
