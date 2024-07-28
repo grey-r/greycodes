@@ -57,11 +57,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
         working-directory: pages/greycodes.net
-      - uses: browser-actions/setup-chrome@v1
-        if: ${{inputs.test}}
       - name: Build Angular Pages
         run: npm run build
         working-directory: pages/greycodes.net
+      - uses: browser-actions/setup-chrome@v1
+        if: ${{inputs.test}}
       - name: Test Angular Pages
         if: ${{inputs.test}}
         run: npm run test:ci
