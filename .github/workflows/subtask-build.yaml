@@ -1,0 +1,14 @@
+on:
+  workflow_call:
+    inputs:
+      package:
+        required: true
+        type: boolean
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@4
+      - name: Noop Debug
+        run: |
+          echo 'Hey, nothing to build...'

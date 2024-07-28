@@ -1,0 +1,20 @@
+name: Build & Deploy
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+jobs:
+  build:
+    uses: ./.github/workflows/subtask-build.yaml
+    with:
+      package: true
+  deploy:
+    needs: [build]
+    strategy:
+      matrix:
+        environment: [prod]
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      environment: ${{matrix.environment}}
+    secrets: inherit
