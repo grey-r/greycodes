@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{inputs.environment}}
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -17,7 +18,24 @@ jobs:
         working-directory: ./artifacts/b2-worker
         run: |
           unzip ./artifact.zip
-      - name: Build & Deploy Worker
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: ./artifacts/b2-worker
+      - name: Install Wrangler
+        run: npm install -g wrangler
+      - name: Substitute B2 Worker Variables
+        working-directory: ./artifacts/b2-worker
+        env:
+          B2_BUCKET_NAME: ${{ vars.B2_BUCKET_NAME }}
+          B2_ENDPOINT: ${{ vars.B2_ENDPOINT }}
+        run: |
+          sed -i "s/#{B2_BUCKET_NAME}#/$B2_BUCKET_NAME/g" wrangler.toml
+          sed -i "s/#{B2_ENDPOINT}#/$B2_ENDPOINT/g" wrangler.toml
+      - name: Build & Deploy B2 Worker
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: ./artifacts/b2-worker
@@ -25,12 +43,8 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           command: deploy
           secrets: |
-            B2_KEY_ID
-            B2_KEY_NAME
-            B2_KEY_VALUE
+            B2_APPLICATION_KEY_ID
+            B2_APPLICATION_KEY
         env:
-          B2_KEY_ID: ${{ secrets.B2_KEY_ID }}
-          B2_KEY_NAME: ${{ secrets.B2_KEY_NAME }}
-          B2_KEY_VALUE: ${{ secrets.B2_KEY_VALUE }}
-          B2_BUCKET_NAME: ${{ env.B2_BUCKET_NAME }}
-          B2_ENDPOINT: ${{ env.B2_ENDPOINT }}
+          B2_APPLICATION_KEY_ID: ${{ secrets.B2_KEY_ID }}
+          B2_APPLICATION_KEY: ${{ secrets.B2_KEY_VALUE }}
