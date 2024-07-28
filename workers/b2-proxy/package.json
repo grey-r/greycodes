@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "gr-cf-b2",
+  "version": "1.0.0",
+  "description": "A template for kick starting a Cloudflare Workers project",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "grey-r <greyruessler@gmail.com>",
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  },
+  "dependencies": {
+    "aws4fetch": "^1.0.19",
+    "wrangler": "^3.65.1"
+  }
+}
