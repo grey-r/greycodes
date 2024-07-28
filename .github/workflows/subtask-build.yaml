@@ -55,16 +55,16 @@ jobs:
         with:
           node-version: 22.x
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install --frozen-lockfile
         working-directory: pages/greycodes.net
       - uses: browser-actions/setup-chrome@v1
         if: ${{inputs.test}}
       - name: Build Angular Pages
-        run: yarn run build
+        run: npm run build
         working-directory: pages/greycodes.net
       - name: Test Angular Pages
         if: ${{inputs.test}}
-        run: yarn run test:ci
+        run: npm run test:ci
         working-directory: pages/greycodes.net
       - name: Zip Pages (Distributables)
         id: zip-pages

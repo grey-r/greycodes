@@ -1,9 +1,4 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Yarn
-.yarn/unplugged
-.yarn/build-state.yml
-
 # Compiled output
 /dist
 /tmp
