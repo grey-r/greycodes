@@ -30,7 +30,7 @@ jobs:
 
           outputDirectory=$workingDirectory/artifacts
           outputFile=$outputDirectory/$zipFile
-          mkdir -p $workingDirectory
+          mkdir -p $outputDirectory
           cp ./$zipFile $outputFile
 
           echo 'artifact<<EOF' >> $GITHUB_OUTPUT
