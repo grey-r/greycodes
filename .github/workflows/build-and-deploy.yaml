@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "main"
+      - "page_deploy"
   workflow_dispatch:
 jobs:
   build:

@@ -18,6 +18,7 @@ jobs:
         working-directory: ./artifacts/b2-worker
         run: |
           unzip ./artifact.zip
+          rm ./artifact.zip
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -48,3 +49,19 @@ jobs:
         env:
           B2_APPLICATION_KEY_ID: ${{ secrets.B2_KEY_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_KEY_VALUE }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: "Pages-Dist"
+          path: ./artifacts/pages
+      - name: Unzip Worker
+        working-directory: ./artifacts/pages
+        run: |
+          unzip ./artifact.zip
+          rm ./artifact.zip
+      - name: Deploy Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          workingDirectory:
+          apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: deploy ./artifacts/pages --project-name greycodes-${{inputs.environment}}
