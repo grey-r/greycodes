@@ -20,7 +20,7 @@ jobs:
       #   working-directory: workers/b2-proxy
       - name: Zip Worker
         id: zip-b2-proxy
-        if: github.event.inputs.package
+        if: ${{inputs.package}}
         run: |
           workingDirectory=$(pwd)
           cd ./workers/b2-proxy
