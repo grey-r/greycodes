@@ -1,9 +1,9 @@
 # Initial Setup
 ## Cloudflare
 
-1. Create or log into a CloudFlare account.
+1. Create or log into a Cloudflare account.
 1. Click "Add a site." Enter your previously purchased domain name.
-1. Proceed through the site initialization steps -- this will link your site to CloudFlare's DNS.
+1. Proceed through the site initialization steps -- this will link your site to Cloudflare's DNS.
 1. Activate all basic features on the account as needed.
 5. Under DNS, Settings enable DNSSEC
 1. Under Speed, Optimization enable relevant features
@@ -20,7 +20,7 @@
 
 ## Environment Configuration
 For each account, perform the following steps:
-1. Start on your CloudFlare dashboard and navigate into the site
+1. Start on your Cloudflare dashboard and navigate into the site
 2. Copy the Zone ID and Account ID. Note them down somewhere.
 3. Create an API key, granting it "Edit worker" access for a specific zone (your domain)
 4. In another tab, open GitHub. 
@@ -45,7 +45,7 @@ Commit to main.
 Deploy the code once from GitHub, using Actions, Build & Deploy, Run Workflow.
 
 ## Post-Deployment
-On each CloudFlare project within "Workers & Pages," set up the domain.
+On each Cloudflare project within "Workers & Pages," set up the domain.
 - The web pages should use the main domain
 - The b2 worker should use a /images/ route on the web pages' domain
   - ensure that both `*.domain.net/images/*` and `domain.net/images/*` are supported
