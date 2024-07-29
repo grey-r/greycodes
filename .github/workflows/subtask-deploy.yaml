@@ -5,6 +5,8 @@ on:
       environment:
         required: true
         type: string
+env:
+  PAGES_PROJECT_NAME: "greycodes-pages-${{inputs.environment}}"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -58,10 +60,29 @@ jobs:
         run: |
           unzip ./artifact.zip
           rm ./artifact.zip
+      - name: List Projects
+        id: list-projects
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages project list
+      - name: Create Pages Project
+        if: ${{ !contains(steps.list-projects.outputs.command-output, env.PAGES_PROJECT_NAME ) }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages project create ${{env.PAGES_PROJECT_NAME}}
       - name: Deploy Pages
+        id: deploy-pages
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: ./
           apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages deploy ./artifacts/pages
+          command: pages deploy ./artifacts/pages --project-name ${{env.PAGES_PROJECT_NAME}}
+      - name: print deployment-url
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy-pages.outputs.deployment-url }}
+        run: echo $DEPLOYMENT_URL
