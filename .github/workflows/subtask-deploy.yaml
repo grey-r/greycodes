@@ -73,7 +73,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN_WORKER }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages project create ${{env.PAGES_PROJECT_NAME}}
+          command: pages project create ${{env.PAGES_PROJECT_NAME}} --production-branch main
       - name: Deploy Pages
         id: deploy-pages
         uses: cloudflare/wrangler-action@v3
