@@ -66,3 +66,4 @@ To deploy using serverless add a [`serverless.yml`](https://serverless.com/frame
 ## Acknowledgements
 
 Based on [https://github.com/obezuk/worker-signed-s3-template](https://github.com/obezuk/worker-signed-s3-template)
+Forked from [https://github.com/backblaze-b2-samples/cloudflare-b2](https://github.com/backblaze-b2-samples/cloudflare-b2)
