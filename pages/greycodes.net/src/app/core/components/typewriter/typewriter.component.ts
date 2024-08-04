@@ -2,6 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
+  combineLatest,
   concatAll,
   concatMap,
   defer,
@@ -16,6 +17,8 @@ import {
 import { shuffle } from '../../utilities/utilities';
 import { atInterval, Delay } from '../../utilities/rxjs';
 
+type ShuffleMethod = 'all' | 'keep-first' | 'none';
+
 @Component({
   selector: 'app-typewriter',
   standalone: true,
@@ -26,7 +29,7 @@ import { atInterval, Delay } from '../../utilities/rxjs';
 export class TypewriterComponent {
   // Inputs
   public readonly items = input.required<string[]>();
-  public readonly shuffle = input<boolean>(true);
+  public readonly shuffle = input<ShuffleMethod>('all');
   public readonly pauseDelay = input<Delay>(250);
   public readonly showDelay = input<Delay>(5000);
   public readonly typeDelay = input<Delay>([60, 90]);
@@ -34,15 +37,22 @@ export class TypewriterComponent {
   public readonly blinkDelay = input<Delay>(100);
 
   // Template variables
-  public readonly text$ = toObservable(this.items).pipe(
-    switchMap((items) =>
-      defer(() => from(this.shuffle() ? shuffle(items) : items)).pipe(
+  public readonly text$ = combineLatest([
+    toObservable(this.items),
+    toObservable(this.shuffle),
+  ]).pipe(
+    switchMap(([rawItems, shuffleMethod]) =>
+      defer(() => {
+        const items = this.shufflePredicate[shuffleMethod](rawItems);
+        return from(items);
+      }).pipe(
         concatMap((text) => this.getTypedStream(text, this.delays)),
         repeat()
       )
     ),
     shareReplay({ bufferSize: 1, refCount: true })
   );
+
   public readonly paused$ = this.text$.pipe(
     switchMap(() =>
       of(false).pipe(mergeWith(atInterval(true, this.delays.blink$)))
@@ -52,6 +62,23 @@ export class TypewriterComponent {
   );
 
   // Private functions
+  private readonly shufflePredicate: Record<
+    ShuffleMethod,
+    <T>(items: T[]) => T[]
+  > = {
+    all: shuffle,
+    'keep-first': (arr) => {
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      const shuffledItems = [...arr];
+      shuffledItems.splice(0, 1);
+      return [arr[0], ...shuffle(shuffledItems)];
+    },
+    none: (arr) => arr,
+  };
+
   private readonly delays = {
     pause$: toObservable(this.pauseDelay),
     show$: toObservable(this.showDelay),

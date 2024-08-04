@@ -40,7 +40,7 @@
   position: relative;
   font-size: max(6vw, 5vh);
   text-align: start;
-  --text-color: #000;
+  --text-color: #332525;
   color: var(--text-color);
   @include mixins.text-shadow-sm();
 }
@@ -76,6 +76,13 @@ div.content {
   p {
     margin-bottom: 1rem;
   }
+
+  font-size: 1.25em;
+
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
 }
 
 .portrait {
@@ -83,4 +90,7 @@ div.content {
   width: min(480px, 30vw);
   margin-left: 1rem;
   margin-bottom: 1rem;
+
+  box-shadow: 0rem 0rem 0.5rem rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
 }
