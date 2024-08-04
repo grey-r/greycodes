@@ -1,0 +1,68 @@
+@use "mixins";
+@use "variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 3rem;
+}
+
+// .fw-image-container {
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   padding: 0 !important;
+
+//   > div {
+//     position: relative;
+//   }
+
+//   img {
+//     object-fit: cover;
+//   }
+// }
+
+.bg-content-1 {
+  position: relative;
+  background-image: url(/assets/20220818_mtn_DSC0866.jpg);
+  background-size: cover;
+
+  > * {
+    padding: 1rem;
+    @include mixins.desktop() {
+      padding: 5rem;
+    }
+  }
+}
+
+.slogan-text {
+  position: relative;
+  font-size: max(6vw, 5vh);
+  text-align: start;
+  --text-color: #000;
+  color: var(--text-color);
+  @include mixins.text-shadow-sm();
+}
+
+.see-more {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.75rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  > button {
+    @include mixins.shadow-md();
+    @include mixins.text-shadow-md();
+    color: #fff;
+    background: rgba(#777, 0.4);
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 2vmax;
+  }
+}
