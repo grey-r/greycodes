@@ -7,5 +7,13 @@ export function shuffle<T>(arr: T[]): T[] {
 }
 
 export function randomInt(min: number, max: number) {
-  return Math.floor(min + Math.random() * (max - min + 1));
+  return Math.floor(min + randomFloat(0, max - min + 1));
+}
+
+export function randomFloat(min: number, max: number) {
+  return min + Math.random() * (max - min);
+}
+
+export function nameof<T>(name: Extract<keyof T, string>): string {
+  return name;
 }
