@@ -66,3 +66,21 @@
     font-size: 2vmax;
   }
 }
+
+div.content {
+  padding: 0 3rem;
+  @include mixins.mobile() {
+    padding: 0 1rem;
+  }
+  h1,
+  p {
+    margin-bottom: 1rem;
+  }
+}
+
+.portrait {
+  float: right;
+  width: min(480px, 30vw);
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}

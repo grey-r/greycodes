@@ -1,9 +1,5 @@
 @use "mixins";
 @use "variables";
-// FA6 Free
-@import "@fortawesome/fontawesome-free/scss/fontawesome";
-@import "@fortawesome/fontawesome-free/scss/brands";
-@import "@fortawesome/fontawesome-free/scss/solid";
 
 html {
   width: 100%;
@@ -63,4 +59,13 @@ img.cover-h {
 
 .h-full-minus-header {
   height: calc(100svh - variables.$header-height) !important;
+}
+
+button,
+*[role="button"] {
+  cursor: pointer;
+}
+
+* {
+  scroll-margin-top: #{variables.$header-height};
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { TypewriterComponent } from '../../core/components/typewriter/typewriter.component';
 
 @Component({
@@ -21,4 +21,11 @@ export class HomeComponent {
     'containerizes apps',
     'automates deployments',
   ];
+
+  public scrollTo(element: HTMLElement) {
+    element.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth',
+    });
+  }
 }
