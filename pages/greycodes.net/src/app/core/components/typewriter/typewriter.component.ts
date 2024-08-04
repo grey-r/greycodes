@@ -31,7 +31,7 @@ export class TypewriterComponent {
   public readonly items = input.required<string[]>();
   public readonly shuffle = input<boolean>(true);
   public readonly pauseDelay = input<number | [number, number]>(250);
-  public readonly showDelay = input<number | [number, number]>(8000);
+  public readonly showDelay = input<number | [number, number]>(5000);
   public readonly typeDelay = input<number | [number, number]>([60, 90]);
   public readonly backDelay = input<number | [number, number]>([35, 10]);
 
