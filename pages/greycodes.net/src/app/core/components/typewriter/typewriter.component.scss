@@ -1,0 +1,37 @@
+@use "variables";
+
+:host {
+  display: inline;
+  white-space: nowrap;
+  > * {
+    white-space: wrap;
+  }
+}
+
+.caret {
+  position: relative;
+  &::after {
+    display: block;
+    position: absolute;
+
+    height: 1em;
+    bottom: 0.1em;
+    right: -0.1em;
+
+    border-right: 2px var(--text-color) solid;
+    content: "";
+  }
+
+  &.blink::after {
+    animation: blink 1s infinite step-start;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

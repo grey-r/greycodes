@@ -1,0 +1,24 @@
+@use "variables";
+
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+app-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: variables.$header-height;
+  z-index: 1;
+}
+
+.content {
+  margin-top: variables.$header-height;
+  flex-grow: 1;
+  flex-shrink: 0;
+}

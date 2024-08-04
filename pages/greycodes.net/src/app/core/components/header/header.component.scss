@@ -1,0 +1,46 @@
+@use "mixins";
+
+:host {
+  @include mixins.panel();
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  @include mixins.desktop() {
+    padding: 0 2rem;
+  }
+  gap: 1rem;
+  font-size: 2rem;
+}
+
+.socials {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+button {
+  background: transparent;
+  border: none;
+}
+
+.logo-host {
+  height: 1em;
+  display: flex;
+  &.mobile-only {
+    height: 0.6em;
+  }
+  > img {
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  font-size: 0.7em;
+}
