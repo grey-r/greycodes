@@ -39,7 +39,8 @@ export function atInterval<T>(item: T, delay: Delay | Observable<Delay>) {
     return delayValues$.pipe(
       switchMap((delayValue) =>
         at(item, subscriptionTime + renderDelay(delayValue))
-      )
+      ),
+      take(1)
     );
   });
 }

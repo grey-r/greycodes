@@ -7,7 +7,9 @@
 <div class="bg-content-1 h-full-minus-header">
   <div>
     <div class="slogan-text">
-      Grey <app-typewriter [items]="whatIDo" [shuffle]="false"></app-typewriter>
+      Grey @defer() {
+      <app-typewriter [items]="whatIDo" [shuffle]="false"></app-typewriter>
+      }
     </div>
   </div>
   <div class="see-more">
