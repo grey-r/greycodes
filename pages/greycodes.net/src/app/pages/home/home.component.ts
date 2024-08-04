@@ -11,16 +11,14 @@ import { TypewriterComponent } from '../../core/components/typewriter/typewriter
 export class HomeComponent {
   public readonly whatIDo = [
     'codes .NET',
-    'designs architectures',
-    'creates microservices',
     'builds pipelines',
-    'sets technical standards',
-    'mentors fellow developers',
-    'leads code reviews',
-    'implements security protocols',
-    'optimizes performance',
-    'collaborates with stakeholders',
-    'writes technical documentation',
-    'integrates third-party services',
+    'designs systems',
+    'defines infrastructure',
+    'creates microservices',
+    'sets standards',
+    'practices SOLID',
+    'observes event streams',
+    'containerizes apps',
+    'automates deployments',
   ];
 }
