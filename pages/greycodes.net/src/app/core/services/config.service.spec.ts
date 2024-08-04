@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ConfigService } from './config.service';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('ConfigService', () => {
   let service: ConfigService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideExperimentalZonelessChangeDetection()],
+    });
     service = TestBed.inject(ConfigService);
   });
 

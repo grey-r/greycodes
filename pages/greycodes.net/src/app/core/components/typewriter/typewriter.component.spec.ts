@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TypewriterComponent } from './typewriter.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('TypewriterComponent', () => {
   let component: TypewriterComponent;
@@ -8,9 +9,9 @@ describe('TypewriterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TypewriterComponent]
-    })
-    .compileComponents();
+      imports: [TypewriterComponent],
+      providers: [provideExperimentalZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TypewriterComponent);
     component = fixture.componentInstance;
