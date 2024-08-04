@@ -1,0 +1,50 @@
+@use "variables.scss" as variables;
+@mixin background-aero() {
+  background-color: variables.$background-aero;
+  backdrop-filter: blur(1rem);
+}
+@mixin background-flat() {
+  background-color: variables.$background-flat;
+}
+@mixin panel() {
+  @include background-flat();
+  padding: 1rem;
+  border: solid 1px variables.$border-flat;
+  // @include background-aero();
+  // padding: 1rem;
+  // border: solid 1px variables.$border-aero;
+}
+@mixin mobile {
+  @media (max-width: 799px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 800px) {
+    @content;
+  }
+}
+
+@mixin mobile-only() {
+  @include desktop() {
+    display: none !important;
+  }
+}
+@mixin desktop-only() {
+  @include mobile() {
+    display: none !important;
+  }
+}
+// shadow
+@mixin text-shadow-sm() {
+  text-shadow: 0.07rem 0.07rem 0.1rem rgba(30, 30, 30, 0.2);
+}
+@mixin shadow-sm() {
+  box-shadow: 0.07rem 0.07rem 0.1rem rgba(30, 30, 30, 0.2);
+}
+@mixin text-shadow-md() {
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(30, 30, 30, 0.4);
+}
+@mixin shadow-md() {
+  box-shadow: 0.1rem 0.1rem 0.2rem rgba(30, 30, 30, 0.4);
+}
