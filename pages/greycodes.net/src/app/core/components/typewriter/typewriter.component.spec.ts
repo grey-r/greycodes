@@ -15,7 +15,8 @@ describe('TypewriterComponent', () => {
 
     fixture = TestBed.createComponent(TypewriterComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.componentRef.setInput('items', ['test']);
+    await fixture.whenStable();
   });
 
   it('should create', () => {
