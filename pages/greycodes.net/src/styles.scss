@@ -1,5 +1,6 @@
 @use "mixins";
 @use "variables";
+@use "sass:math";
 
 html {
   width: 100%;
@@ -25,6 +26,15 @@ h4,
 h5,
 h6 {
   margin: 0;
+}
+
+@for $i from 1 through 6 {
+  $-max-rem: 5;
+  $-base-rem: 1;
+  h#{$i} {
+    $-percentage: math.div(6 - $i - 1, 5);
+    font-size: #{$-base-rem + ($-max-rem - $-base-rem) * $-percentage}rem;
+  }
 }
 
 .desktop-only {
@@ -68,4 +78,9 @@ button,
 
 * {
   scroll-margin-top: #{variables.$header-height};
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
 }
