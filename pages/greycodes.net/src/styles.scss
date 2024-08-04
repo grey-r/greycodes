@@ -62,5 +62,5 @@ img.cover-h {
 }
 
 .h-full-minus-header {
-  height: calc(100vh - variables.$header-height) !important;
+  height: calc(100svh - variables.$header-height) !important;
 }
