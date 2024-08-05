@@ -1,0 +1,26 @@
+:host {
+  h1,
+  p {
+    margin-bottom: 1rem;
+  }
+
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
+
+  &.inverted {
+    --text-color: #fff;
+    background: #333;
+  }
+}
+
+.portrait {
+  float: right;
+  width: min(480px, 30vw);
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+
+  box-shadow: 0rem 0rem 0.5rem rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+}

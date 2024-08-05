@@ -10,7 +10,6 @@ html {
   padding: 0;
   margin: 0;
   --text-color: #{variables.$text-color-main};
-  color: var(--text-color);
 }
 
 body {
@@ -78,9 +77,14 @@ button,
 
 * {
   scroll-margin-top: #{variables.$header-height};
+  color: var(--text-color);
 }
 
 a {
-  color: var(--text-color);
   text-decoration: none;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
