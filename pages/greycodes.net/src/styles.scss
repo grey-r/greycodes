@@ -32,8 +32,8 @@ h6 {
   $-max-rem: 5;
   $-base-rem: 1;
   h#{$i} {
-    $-percentage: math.div(6 - $i - 1, 5);
-    font-size: #{$-base-rem + ($-max-rem - $-base-rem) * $-percentage}rem;
+    $-percentage: math.div(6 - $i, 6);
+    font-size: #{$-base-rem + (($-max-rem - $-base-rem) * $-percentage)}rem;
   }
 }
 

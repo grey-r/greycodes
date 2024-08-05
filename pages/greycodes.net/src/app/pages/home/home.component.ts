@@ -2,11 +2,12 @@ import { Component, ElementRef } from '@angular/core';
 import { TypewriterComponent } from '../../core/components/typewriter/typewriter.component';
 import { interval, map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { FooterComponent } from '../../core/components/footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TypewriterComponent, AsyncPipe],
+  imports: [TypewriterComponent, AsyncPipe, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
