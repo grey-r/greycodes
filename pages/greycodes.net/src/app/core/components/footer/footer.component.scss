@@ -1,0 +1,37 @@
+@use "mixins";
+
+:host {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  justify-content: end;
+  align-items: end;
+  // @include mixins.mobile() {
+  //   padding: 1rem;
+  // }
+
+  height: 4rem;
+  padding: 1rem;
+
+  background: #222;
+
+  --text-color: #fff;
+  color: var(--text-color);
+  font-size: 0.8em;
+
+  > :first-child {
+    text-align: left;
+  }
+
+  > :not(:last-child):not(:first-child) {
+    text-align: center;
+  }
+
+  > :last-child {
+    text-align: end;
+  }
+}
+
+a {
+  text-decoration: underline;
+}

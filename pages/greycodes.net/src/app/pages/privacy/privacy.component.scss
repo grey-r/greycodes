@@ -1,0 +1,17 @@
+@use "mixins";
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 1rem;
+}
+
+.content {
+  padding: 3rem;
+  @include mixins.mobile() {
+    padding: 1rem;
+  }
+  > * {
+    margin-bottom: 3rem;
+  }
+}

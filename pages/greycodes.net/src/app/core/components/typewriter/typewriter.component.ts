@@ -2,23 +2,22 @@ import { AsyncPipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import {
-  concat,
+  combineLatest,
   concatAll,
   concatMap,
   defer,
-  delay,
   distinctUntilChanged,
   from,
-  interval,
-  map,
   mergeWith,
   of,
   repeat,
   shareReplay,
   switchMap,
-  take,
 } from 'rxjs';
 import { shuffle } from '../../utilities/utilities';
+import { atInterval, Delay } from '../../utilities/rxjs';
+
+type ShuffleMethod = 'all' | 'keep-first' | 'none';
 
 @Component({
   selector: 'app-typewriter',
@@ -28,19 +27,26 @@ import { shuffle } from '../../utilities/utilities';
   styleUrl: './typewriter.component.scss',
 })
 export class TypewriterComponent {
+  // Inputs
   public readonly items = input.required<string[]>();
-  public readonly shuffle = input<boolean>(true);
-  public readonly pauseDelay = input<number | [number, number]>(250);
-  public readonly showDelay = input<number | [number, number]>(5000);
-  public readonly typeDelay = input<number | [number, number]>([60, 90]);
-  public readonly backDelay = input<number | [number, number]>([35, 10]);
+  public readonly shuffle = input<ShuffleMethod>('all');
+  public readonly pauseDelay = input<Delay>(250);
+  public readonly showDelay = input<Delay>(5000);
+  public readonly typeDelay = input<Delay>([60, 90]);
+  public readonly backDelay = input<Delay>([35, 10]);
+  public readonly blinkDelay = input<Delay>(100);
 
-  private readonly pausedDelay = 100;
-
-  public readonly text$ = toObservable(this.items).pipe(
-    switchMap((items) =>
-      defer(() => from(this.shuffle() ? shuffle(items) : items)).pipe(
-        concatMap((text) => this.getTypedStream(text)),
+  // Template variables
+  public readonly text$ = combineLatest([
+    toObservable(this.items),
+    toObservable(this.shuffle),
+  ]).pipe(
+    switchMap(([rawItems, shuffleMethod]) =>
+      defer(() => {
+        const items = this.shufflePredicate[shuffleMethod](rawItems);
+        return from(items);
+      }).pipe(
+        concatMap((text) => this.getTypedStream(text, this.delays)),
         repeat()
       )
     ),
@@ -49,54 +55,60 @@ export class TypewriterComponent {
 
   public readonly paused$ = this.text$.pipe(
     switchMap(() =>
-      of(false).pipe(mergeWith(of(true).pipe(delay(this.pausedDelay))))
+      of(false).pipe(mergeWith(atInterval(true, this.delays.blink$)))
     ),
     distinctUntilChanged(),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  private getTypedStream(text: string) {
-    const steps = this.getTypedSteps(text);
+  // Private functions
+  private readonly shufflePredicate: Record<
+    ShuffleMethod,
+    <T>(items: T[]) => T[]
+  > = {
+    all: shuffle,
+    'keep-first': (arr) => {
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      const shuffledItems = [...arr];
+      shuffledItems.splice(0, 1);
+      return [arr[0], ...shuffle(shuffledItems)];
+    },
+    none: (arr) => arr,
+  };
+
+  private readonly delays = {
+    pause$: toObservable(this.pauseDelay),
+    show$: toObservable(this.showDelay),
+    type$: toObservable(this.typeDelay),
+    back$: toObservable(this.backDelay),
+    blink$: toObservable(this.blinkDelay),
+  };
+
+  private getTypedStream(text: string, delays: TypewriterComponent['delays']) {
+    const steps = this.getPrefixProgression(text);
     const reverseSteps = [...steps].reverse();
     reverseSteps.shift(); // skip the first step (which we've already typed)
 
     const stepStreams = steps.map((innerText) =>
-      this.getDelayedStream(innerText, this.typeDelay())
+      atInterval(innerText, delays.type$)
     );
-    const show$ = this.getDelayedStream(
-      steps[steps.length - 1],
-      this.showDelay()
-    );
+    const show$ = atInterval(steps[steps.length - 1], delays.show$);
     const reverseStepStreams = reverseSteps.map((innerText) =>
-      this.getDelayedStream(innerText, this.backDelay())
+      atInterval(innerText, delays.back$)
     );
-    const pause$ = this.getDelayedStream('', this.pauseDelay());
+    const pause$ = atInterval('', delays.pause$);
 
     const allStreams = [...stepStreams, show$, ...reverseStepStreams, pause$];
     return from(allStreams).pipe(concatAll());
   }
 
-  private getDelayedStream<T>(
-    item: T,
-    ...delay: Parameters<TypewriterComponent['getDelay']>
-  ) {
-    return interval(this.getDelay(...delay)).pipe(
-      take(1),
-      map(() => item)
-    );
-  }
-
-  private getTypedSteps(text: string) {
+  private getPrefixProgression(text: string) {
     return [...text].reduce(
       (prev, cur) => [...prev, prev[prev.length - 1] + cur],
       ['']
     );
-  }
-
-  private getDelay(delay: number | [number, number]) {
-    if (typeof delay === 'number') {
-      return delay;
-    }
-    return delay[0] + Math.random() * (delay[1] - delay[0]);
   }
 }

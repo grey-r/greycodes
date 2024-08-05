@@ -1,5 +1,5 @@
 <!--Left Side-->
-<button class="mobile-only"><i class="fas fa-bars"></i></button>
+<button class="mobile-only"><fa-icon [icon]="faBars"></fa-icon></button>
 <div class="desktop-only logo-host">
   <img src="/assets/logo.jpg" />
 </div>
@@ -8,15 +8,26 @@
   <img src="/assets/logo.jpg" />
 </div>
 <div class="desktop-only nav-items">
-  <span>Home</span>
-  <span>Portfolio</span>
-  <span>Photography</span>
-  <span>Contact</span>
+  <a
+    [routerLink]="['/']"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Home</a
+  >
+  <a class="disabled">Portfolio</a>
+  <a class="disabled">Photography</a>
+  <a class="disabled">Contact</a>
 </div>
 <!--Right-->
 <div class="desktop-only socials">
-  <i class="fab fa-linkedin-in"></i>
-  <i class="fab fa-instagram"></i>
-  <i class="fab fa-github"></i>
+  <a href="https://www.linkedin.com/in/grey-ruessler/" target="_blank"
+    ><fa-icon [icon]="faLinkedinIn"></fa-icon
+  ></a>
+  <a href="https://www.instagram.com/greycodes/" target="_blank">
+    <fa-icon [icon]="faInstagram"></fa-icon
+  ></a>
+  <a href="https://www.github.com/grey-r/" target="_blank">
+    <fa-icon [icon]="faGithub"></fa-icon
+  ></a>
 </div>
 <div class="mobile-only"></div>

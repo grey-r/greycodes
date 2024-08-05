@@ -25,7 +25,7 @@
 
 .bg-content-1 {
   position: relative;
-  background-image: url(/assets/20220818_mtn_DSC0866.jpg);
+  background-image: url(/assets/20220818_mtn_DSC0866-3.jpg);
   background-size: cover;
 
   > * {
@@ -40,8 +40,7 @@
   position: relative;
   font-size: max(6vw, 5vh);
   text-align: start;
-  --text-color: #000;
-  color: var(--text-color);
+  --text-color: #332525;
   @include mixins.text-shadow-sm();
 }
 
@@ -65,4 +64,33 @@
     border-radius: 0.25rem;
     font-size: 2vmax;
   }
+}
+
+div.content {
+  padding: 0 3rem;
+  @include mixins.mobile() {
+    padding: 0 1rem;
+  }
+  h1,
+  p {
+    margin-bottom: 1rem;
+  }
+
+  font-size: 1.25em;
+
+  font-weight: 500;
+  strong {
+    font-weight: 600;
+  }
+
+  &.inverted {
+    --text-color: #fff;
+    background: #333;
+  }
+}
+
+// personal skills
+.prs::after {
+  content: "*";
+  opacity: 0.3;
 }
