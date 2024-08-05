@@ -19,15 +19,15 @@
   color: var(--text-color);
   font-size: 0.8em;
 
-  &:first-child {
+  > :first-child {
     text-align: left;
   }
 
-  &:not(:last-child):not(:first-child) {
+  > :not(:last-child):not(:first-child) {
     text-align: center;
   }
 
-  &:last-child {
+  > :last-child {
     text-align: end;
   }
 }
