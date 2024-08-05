@@ -47,4 +47,17 @@ button {
   flex-direction: row;
   gap: 2rem;
   font-size: 0.7em;
+
+  > a {
+    --text-color: #333;
+    &:hover {
+      --text-color: #000;
+    }
+    &.active {
+      @include mixins.text-shadow-sm();
+      --text-color: #000;
+      text-decoration: underline;
+    }
+    transition: color 0.2s ease-in-out;
+  }
 }

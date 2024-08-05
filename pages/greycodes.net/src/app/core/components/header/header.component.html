@@ -8,7 +8,12 @@
   <img src="/assets/logo.jpg" />
 </div>
 <div class="desktop-only nav-items">
-  <a [routerLink]="['/']">Home</a>
+  <a
+    [routerLink]="['/']"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Home</a
+  >
   <a>Portfolio</a>
   <a>Photography</a>
   <a>Contact</a>
