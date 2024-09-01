@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { GalleryComponent } from '../../core/components/gallery/gallery.component';
 import { GalleryPhotoComponent } from '../../core/components/gallery-item/gallery-item.component';
 
@@ -648,8 +648,11 @@ export class PhotographyComponent {
   public readonly images = this.imageData.map((image) => ({
     ...image,
     srcSet: image.sources
-      .map((s) => `assets/out/${s.path} ${s.width}w`)
+      .map((s) => `${this.assetFolder}${s.path} ${s.width}w`)
       .join(','),
     src: `assets/out/${image.sources[0].path}`,
+    fullWidth: image.sources[image.sources.length - 1].width,
+    fullHeight: image.sources[image.sources.length - 1].height,
+    fullSrc: `assets/out/${image.sources[image.sources.length - 1].path}`,
   }));
 }

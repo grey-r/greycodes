@@ -1,4 +1,6 @@
-:host {
+@import "photoswipe/dist/photoswipe.css";
+
+app-gallery {
   display: flex;
   flex-wrap: wrap;
   gap: 0.333rem;

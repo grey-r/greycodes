@@ -1,8 +1,14 @@
 <div class="content">
+  <h3>August 11, 2024</h3>
   <app-gallery [baseWidth]="20">
     @for (image of images; track image.name) {
-    <app-gallery-item [aspectRatio]="image.aspectRatio">
-      <img [src]="image.src" [srcset]="image.srcSet" loading="lazy" />
+    <app-gallery-item
+      [aspectRatio]="image.aspectRatio"
+      [galleryImage]="image.fullSrc"
+      [galleryWidth]="image.fullWidth"
+      [galleryHeight]="image.fullHeight"
+    >
+      <img [src]="image.src" [srcset]="image.srcSet" />
     </app-gallery-item>
     }
   </app-gallery>

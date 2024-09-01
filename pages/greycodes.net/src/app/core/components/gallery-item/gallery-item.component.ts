@@ -6,15 +6,20 @@ import {
   Optional,
 } from '@angular/core';
 import { GalleryComponent } from '../gallery/gallery.component';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-gallery-item',
   standalone: true,
-  imports: [],
+  imports: [NgTemplateOutlet],
   templateUrl: './gallery-item.component.html',
   styleUrl: './gallery-item.component.scss',
 })
 export class GalleryPhotoComponent {
+  public readonly galleryImage = input<string | undefined>();
+  public readonly galleryWidth = input<number | undefined>();
+  public readonly galleryHeight = input<number | undefined>();
+
   public readonly aspectRatio = input.required<number>();
   public readonly scale = input<number>(1);
   private readonly width = computed(
