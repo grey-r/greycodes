@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.333rem;
+}
+
+.fill-last-row {
+  flex-grow: 1e4;
+  width: 50%;
+}
