@@ -15,7 +15,7 @@ import { NgTemplateOutlet } from '@angular/common';
   templateUrl: './gallery-item.component.html',
   styleUrl: './gallery-item.component.scss',
 })
-export class GalleryPhotoComponent {
+export class GalleryItemComponent {
   public readonly galleryImage = input<string | undefined>();
   public readonly galleryWidth = input<number | undefined>();
   public readonly galleryHeight = input<number | undefined>();

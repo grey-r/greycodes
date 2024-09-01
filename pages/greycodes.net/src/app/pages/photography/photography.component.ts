@@ -1,11 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
 import { GalleryComponent } from '../../core/components/gallery/gallery.component';
-import { GalleryPhotoComponent } from '../../core/components/gallery-item/gallery-item.component';
+import { GalleryItemComponent } from '../../core/components/gallery-item/gallery-item.component';
 
 @Component({
   selector: 'app-photography',
   standalone: true,
-  imports: [GalleryComponent, GalleryPhotoComponent],
+  imports: [GalleryComponent, GalleryItemComponent],
   templateUrl: './photography.component.html',
   styleUrl: './photography.component.scss',
 })
