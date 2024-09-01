@@ -1,0 +1,20 @@
+@if (galleryImage(); as galleryImage) {
+<a
+  [href]="galleryImage"
+  target="_blank"
+  [attr.data-pswp-src]="galleryImage"
+  [attr.data-pswp-width]="galleryWidth()"
+  [attr.data-pswp-height]="galleryHeight()"
+>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</a>
+} @else {
+<ng-container *ngTemplateOutlet="content"></ng-container>
+}
+<div [style]="'padding-bottom: ' + pseudoPadding() + ';'"></div>
+
+<ng-template #content>
+  <div class="content-host">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
